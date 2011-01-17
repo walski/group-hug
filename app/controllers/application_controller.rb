@@ -4,7 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   def current_user
-    current_facebook_user
+    if session[:user_id]
+      @current_user ||= User.find(session[:user_id])
+    elsif current_facebook_user and @current_user.nil?
+      @current_user = User.find_by_facebook_id(current_facebook_user.id)
+    end
   end
   
   helper_method :current_user

@@ -1,7 +1,13 @@
 <select name="current_page" >
-<% @pages.each do |page| %>
- <option value="<%=page.id%>" ><%=page.category%> - <%=page.name%></option>
+<% @groups.each do |group| %>
+ <option value="<%=group.id%>" ><%=group.name%></option>
 <% end %>
 </select>
 
-<input type="checkbox" selected="false" /> Default group
+<br/>
+<input type="checkbox" selected="false" /> Default group <br/>
+
+<% @posts.each do |post| %>
+ <%=post.message%><br/> 
+<% end %>
+
