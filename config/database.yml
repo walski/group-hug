@@ -5,7 +5,7 @@ development:
   database: fbcomments
   host: localhost
   username: root
-  password: "123456"
+  password:
   pool: 10
   timeout: 5000
 
@@ -17,7 +17,7 @@ test:
   database: fbcomments
   host: localhost
   username: root
-  password: "123456"
+  password:
   pool: 10
   timeout: 5000
 
@@ -26,6 +26,6 @@ production:
   database: fbcomments
   host: localhost
   username: root
-  password: "123456"
+  password:
   pool: 10
   timeout: 5000
