@@ -30,7 +30,7 @@ def create
       session[:user_id] = @user.id
     end
     if current_user
-      redirect_to session[:return_to]||'/'
+      redirect_to session[:return_to]||url_for(groups_path)
       session[:return_to]=nil
     else
       flash[:error] = "Unable to log you in"
