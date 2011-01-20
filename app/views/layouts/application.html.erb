@@ -14,7 +14,7 @@
   <%= fb_connect_async_js %>
 
 <% if current_facebook_user %>
-<%= "Hello #{current_user.name}!" #
+<%= "Hello #{@current_user.name}!" #
 %>
 <%= fb_logout_link("Logout of fb", request.url) %><br />
 <% else
