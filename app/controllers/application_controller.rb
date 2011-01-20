@@ -21,4 +21,6 @@ class ApplicationController < ActionController::Base
       redirect_to :controller =>'home', :action =>'login' and return
     end
   end
+  
+  
 end

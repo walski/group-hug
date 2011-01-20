@@ -1,0 +1,37 @@
+
+<% content_for (:javascript) do %>
+$(document).ready(function() {
+  $('#group').bind('change', function() {
+	$('#posts_container').load('/groups/' + $(this).val() + '/posts',  function() {
+	  FB.XFBML.parse(document.getElementById('posts_container'));
+	});
+  });
+
+  $('#posts_container').load('/groups/<%=@groups[0].id%>/posts',  function() {
+    FB.XFBML.parse(document.getElementById('posts_container'));
+  });
+
+  /*
+  $('#def_group').bind('change', function() {
+	$('#posts_container').load('/groups/' + $(this).val() + '/posts',  function() {
+	  FB.XFBML.parse(document.getElementById('posts_container'));
+	});
+  });
+  */
+
+
+  });  
+<% end %>
+
+
+<select name="group" id="group" >
+<% @groups.each do |group| %>
+ <option value="<%=group.id%>" ><%=group.name%></option>
+<% end %>
+</select>
+
+<br/>
+<input id="def_group" name="def_group" type="checkbox" selected="false" /> Default group <br/>
+
+<div id="posts_container" >Posts</div>
+

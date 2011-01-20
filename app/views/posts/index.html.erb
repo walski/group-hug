@@ -1,0 +1,18 @@
+
+<%= link_to "Post", url_for(new_group_post_path(@group.id)) %>
+
+
+<% @posts.each do |post| %>
+
+  <%#=post.from.inspect%>
+<div style="clear:both">
+  <span style="float:left;width:55px">
+    <fb:profile-pic uid="<%=post.from.id%>" linked="false" size="q"></fb:profile-pic>
+  </span>
+  <span>
+    <%=post.message%><br/> 
+    <%= time_ago_in_words(post.updated_time) %> ago
+  </span>
+</div>
+
+<% end %>

@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   
-  before_filter :login_required, :except => [:login]
+  before_filter :login_required, :except => [:login, :create]
 
   
   def index 
@@ -30,7 +30,7 @@ def create
       session[:user_id] = @user.id
     end
     if current_user
-      redirect_to session[:return_to]||notes_path
+      redirect_to session[:return_to]||'/'
       session[:return_to]=nil
     else
       flash[:error] = "Unable to log you in"
@@ -39,16 +39,15 @@ def create
   end
 
   def create_via_facebook_connect
+    puts current_facebook_user.inspect
     if current_facebook_user
       #look for an existing user
-      @user = User.find_by_facebook_id(current_facebook_user.id)
+      @user = User.find_by_facebook_id(current_facebook_user.id)	  
       if @user.nil?
-        #if one isn't found, try to grab the email address and join to an existing account
+        #if one isn't found - creating new user
         current_facebook_user.fetch
-        unless current_facebook_user.email.blank?
-          @user = User.find_by_email(current_facebook_user.email)
-          @user.update_attribute(:facebook_id,current_facebook_user.id) if @user
-        end
+	    user = User.new(:name => current_facebook_user[:name], :email => current_facebook_user[:email], :facebook_id => current_facebook_user[:id], :facebook_session_key => current_facebook_client.access_token)
+		user.save
       end
     end
   end
