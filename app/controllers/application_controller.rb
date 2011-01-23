@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   def current_user
+    @current_user = current_facebook_user.fetch
+    $stderr.puts "Session: #{session[:user_id]}"
+    $stderr.puts "current_facebook_user: #{current_facebook_user.inspect}"
+    return current_facebook_user
+  
     if session[:user_id]
       @current_user ||= User.find(session[:user_id])
     elsif current_facebook_user and @current_user.nil?
