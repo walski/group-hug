@@ -24,12 +24,11 @@ class HomeController < ApplicationController
   end
 
 def create
+    puts params.inspect
     @user = User.find_by_email(params[:email])
     create_via_facebook_connect if @user.nil?
-    if @user
+    if @user != nil 
       session[:user_id] = @user.id
-    end
-    if current_user
       redirect_to session[:return_to]||url_for(groups_path)
       session[:return_to]=nil
     else
@@ -39,8 +38,8 @@ def create
   end
 
   def create_via_facebook_connect
-    puts current_facebook_user.inspect
-    if current_facebook_user
+    #puts current_facebook_user.inspect
+    if current_facebook_user 
       #look for an existing user
       @user = User.find_by_facebook_id(current_facebook_user.id)	  
       if @user.nil?

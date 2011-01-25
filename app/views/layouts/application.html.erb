@@ -13,16 +13,17 @@
 
   <%= fb_connect_async_js %>
 
-<% if current_facebook_user %>
-<%= "Hello #{@current_user.name}!" #
-%>
+<% if current_facebook_user !=nil %>
+<%# "Welcome #{current_facebook_user.first_name} #{current_facebook_user.last_name}!" %>
+
 <%= fb_logout_link("Logout of fb", request.url) %><br />
 <% else
 # you must explicitly request permissions for facebook user fields.
 # here we instruct facebook to ask the user for permission for our website
 # to access the user's facebook email and birthday, groups,read_stream
 %>
-  <%= fb_login_and_redirect('http://staging.operations.engineyard.com/home/create', :perms => 'email,user_birthday,user_groups,read_stream, publish_stream') %>
+  <%= fb_login_and_redirect( url_for(:action => 'create', :controller => 'home', :only_path => false),
+      :perms => 'email,user_birthday,user_groups,read_stream, publish_stream') %>
 <% end %>
 
 <%= yield %>
