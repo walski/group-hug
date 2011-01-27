@@ -262,3 +262,9 @@ Started GET "/" for 127.0.0.1 at 2011-01-26 21:09:00 -0800
   Processing by HomeController#login as HTML
 Rendered home/login.html.erb within layouts/application (3.7ms)
 Completed 200 OK in 9ms (Views: 8.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2011-01-26 21:34:11 -0800
+  Processing by HomeController#login as HTML
+Rendered home/login.html.erb within layouts/application (36.2ms)
+Completed 200 OK in 42ms (Views: 41.2ms | ActiveRecord: 0.0ms)
