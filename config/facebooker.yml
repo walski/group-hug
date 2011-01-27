@@ -3,7 +3,7 @@ development:
   secret: 33dfe90f0cfac652eabc44683fbdb162
   api_key: 0aa8f8c9d5d8ae9d8d967213991196ce
 production:
-  app_id: 189832411043253
-  secret: 33dfe90f0cfac652eabc44683fbdb162
-  api_key: 0aa8f8c9d5d8ae9d8d967213991196ce
+  app_id: 125374177530839
+  secret: 3cb856fb613fb651ac1d0b0510886a01a
+  api_key: d6717c54af9efc7b5ed65524c3deaeee
 

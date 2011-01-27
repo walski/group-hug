@@ -165,16 +165,16 @@ The Plan to develop facebook connect application:
 11. Implement goups view in app/views/groups/index.html.erb
 
 
-	<select name="group" id="group" >
-	<% @groups.each do |group| %>
-	 <option value="<%=group.id%>" ><%=group.name%></option>
-	<% end %>
-	</select>
+		<select name="group" id="group" >
+		<% @groups.each do |group| %>
+		 <option value="<%=group.id%>" <%= 'selected' if @default_group == group.id %>><%=group.name%></option>
+		<% end %>
+		</select>
 
-	<br/>
-	<input id="def_group" name="def_group" type="checkbox" selected="false" /> Default group <br/>
+		<br/>
+		<input id="def_group" name="def_group" type="checkbox" selected="false" /> Default group <br/>
 
-	<div id="posts_container" >Posts</div>
+		<div id="posts_container" >Posts</div>
 	
 12. Install jQuery via instructions at https://github.com/lleger/Rails-3-jQuery/ 
 
@@ -185,9 +185,130 @@ The Plan to develop facebook connect application:
 	  </script>
 	
 	and create JavaScript to save default group
+		
+		<% content_for (:javascript) do %>
+		$(document).ready(function() {
+
+		  $('#def_group').bind('change', function() {
+			var group_id = $(this).is(':checked') ? $('#group').val() : 'nil'
+			$.post('/groups/default/' + group_id ,  function() {
+			  alert ('Default group was saved');
+			});
+		  });
+		 
+		});  
+		<% end %>
+
+     So now we have combo box with all user groups.
+	 
+14. Implement default group save in GroupsController
+
+	  def default
+		render :json => { :result => @current_user.update_attributes(:default_group => params['id'] == 'nil' ? nil : params['id']) }
+	  end
+
+15. Implement Posts in current group displaying. 
+     
+	 rails generate controller Groups
+	 
+	Lets use nested resouces to relate groups and posts. Setup routes this way:
 	
+	  resources :groups do
+		resources :posts
+	  end
 	
+16. Call Posts List in groups view via jQuery:
+
+    Implement 'change' event:
+
+	  $('#group').bind('change', function() {
+		$('#posts_container').load('/groups/' + $(this).val() + '/posts',  function() {
+		  FB.XFBML.parse(document.getElementById('posts_container'));
+		});
+	  });
+
+	And implement default group display on page load:
+	  
+	  $('#posts_container').load('/groups/<%=@default_group%>/posts',  function() {
+		FB.XFBML.parse(document.getElementById('posts_container'));
+  
+	  });
+
+	Posts controller will return user images in FBML, so we must parse FBML via FB.XFBML.parse
+	 
+17. Posts list in selected group to insert via AJAX:
+
+	  def index    
+		@group = Mogli::Group.new({:id=>params['group_id']}, current_facebook_client)
+		@group.fetch
+		@posts = @group.feed
+		render :layout => false
+	  end
+
+     view template can be like:
+	 
+	<% @posts.each do |post| %>
+
+	<div style="clear:both">
+	  <span style="float:left;width:55px">
+		<fb:profile-pic uid="<%=post.from.id%>" linked="false" size="q"></fb:profile-pic>
+	  </span>
+	  <span>
+		<%=post.message%><br/> 
+		<%=time_ago_in_words(post.updated_time) %> ago
+	  </span>
+	</div>
+
+	<% end %>
+	 
+
+18. Link to post new message used nested resource path:
+
+	<%= link_to "Post", url_for(new_group_post_path(@group.id)) %>	
 	
+19. Display form to post message to group. PostsController get current group to display name:
+
+	  def new
+		@group = Mogli::Group.new({:id=>params['group_id']}, current_facebook_client)
+		@group.fetch
+	  end
+
+	and simple view:
 	
-	
-	
+	<h1>Post a wall message to: <%= @group.name %></h1>
+
+	<% form_tag  url_for(group_posts_path(@group.id)), :method=>:post do -%>
+	 
+	  
+	  <%= hidden_field_tag 'group_id', @group.id %>
+	  
+	  <div class="field">
+		<%= text_area_tag 'message', nil, :rows => 10, :cols => 60 %>
+	  </div>
+	  <div class="field">
+		<%= check_box_tag 'send_via_email', 'yes', true %> Send the whole group an email
+	  </div>
+	  <div class="actions">
+		<%= submit_tag 'Save' %>
+	  </div>
+	<% end -%>
+	 
+	<%= link_to 'Back', url_for(groups_path) %>
+
+20. Form submited to create action
+
+	  def create
+		@group = Mogli::Group.new({:id=>params['group_id']}, current_facebook_client)
+		@group.fetch
+
+		if current_facebook_user
+		  current_facebook_client.class.post(current_facebook_client.api_path(@group.id + '/feed'),
+				:query=>current_facebook_client.default_params.merge(
+						   {:name => "#{current_facebook_user.name} Post a message using app!",
+							:link=>'http://staging.operations.engineyard.com/groups',
+							:message=>params['message']})).inspect
+		end
+		redirect_to groups_path	
+	  end
+
+21. Run your app via 'rackup' command
