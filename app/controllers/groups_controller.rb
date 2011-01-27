@@ -12,8 +12,7 @@ class GroupsController < ApplicationController
   end
 
   def default
-    puts params.inspect
-    @current_user.update_attributes(:default_group => params['default_group'])
+	render :json => { :result => @current_user.update_attributes(:default_group => params['id'] == 'nil' ? nil : params['id']) }
   end
 
   end
