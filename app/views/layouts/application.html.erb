@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FBPost</title>
+  <title>Group Hug | Sponsored by Engine Yard</title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
@@ -11,32 +11,26 @@
 </head>
 <body>
 	
-  	<div id="header">
+  	<div id="content">
 		<div id="logo">
-			<p class="status">
-			
-				<% if current_facebook_user !=nil %>
-				  <%= "Welcome #{@current_user.name}!"  if @current_user !=nil %>
-				  <%= fb_logout_link("Logout", request.url) %><br />
-				<% else
-				# you must explicitly request permissions for facebook user fields.
-				# here we instruct facebook to ask the user for permission for our website
-				# to access the user's facebook email and birthday, groups,read_stream
-				%>
-				  <%= fb_login_and_redirect( url_for(:action => 'create', :controller => 'home', :only_path => false),
-				      :perms => 'email,user_birthday,user_groups,read_stream, publish_stream') %>
-				<% end %>	
-				
-			</p>
-			<div style="float: left;">
-				<h1><a href="#">FBPost</a></h1>
-			</div>
+				<h1><a href="#">Group Hug</a></h1>
+				&nbsp;by <a href="http://engineyard.com">Engine Yard</a>
+						<p class="status">
+						<% if current_facebook_user !=nil %>
+							<%= "Welcome #{@current_user.name}!"  if @current_user !=nil %>
+							<%= fb_logout_link("Logout", request.url) %><br />
+							<% else
+							# you must explicitly request permissions for facebook user fields
+							# here we instruct facebook to ask the user for permission for our website
+							# to access the user's facebook email and birthday, groups,read_stream
+							%>
+							<%= fb_login_and_redirect( url_for(:action => 'create', :controller => 'home', :only_path => false),:perms => 'email,user_birthday,user_groups,read_stream, publish_stream') %>
+							<% end %>
+						</p>
 		</div>
 	</div>	
 
   <%= fb_connect_async_js %>
-
-
 
 <%= yield %>
 
