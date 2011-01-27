@@ -7,18 +7,19 @@ $(document).ready(function() {
 	});
   });
 
-  $('#posts_container').load('/groups/<%=@groups[0].id%>/posts',  function() {
+  $('#posts_container').load('/groups/<%=@default_group%>/posts',  function() {
     FB.XFBML.parse(document.getElementById('posts_container'));
   });
 
-  /*
+  
   $('#def_group').bind('change', function() {
-	$('#posts_container').load('/groups/' + $(this).val() + '/posts',  function() {
-	  FB.XFBML.parse(document.getElementById('posts_container'));
+	var group_id = $(this).is(':checked') ? $('#group').val() : 'nil'
+	$.post('/groups/default/' + group_id ,  function() {
+	  alert ('Default group was saved');
 	});
   });
-  */
-
+ 
+ 
 
   });  
 <% end %>
