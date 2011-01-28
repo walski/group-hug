@@ -5,11 +5,11 @@
 <% @posts.each do |post| %>
 
   <%#=post.from.inspect%>
-<div style="clear:both">
-  <span style="float:left;width:55px">
+<div class="posts">
+  <span class="innards">
     <fb:profile-pic uid="<%=post.from.id%>" linked="false" size="q"></fb:profile-pic>
   </span>
-  <span>
+  <span class="innards">
     <%=post.message%><br/> 
     <%= time_ago_in_words(post.updated_time) %> ago
   </span>
