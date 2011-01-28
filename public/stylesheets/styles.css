@@ -79,13 +79,11 @@ img {
 
 
 #left {
-	float: left;
 	width: 510px;
 	padding: 0 10px 0 0;
 }
 
 .status {
-	float: right;
 	border-left: 1px solid #CCCCCC;
 	padding: 0 0 0 20px;
 	display:inline;
