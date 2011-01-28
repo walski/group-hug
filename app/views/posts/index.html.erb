@@ -1,18 +1,18 @@
 
-<%= link_to "Post", url_for(new_group_post_path(@group.id)) %>
+<%= link_to "Post Message", url_for(new_group_post_path(@group.id)) %>
 
-
+<table>
+	<tbody>
 <% @posts.each do |post| %>
-
-  <%#=post.from.inspect%>
-<div class="posts">
-  <span class="innards">
-    <fb:profile-pic uid="<%=post.from.id%>" linked="false" size="q"></fb:profile-pic>
-  </span>
-  <span class="innards">
+<%#=post.from.inspect%>
+	<tr>
+  		<td>
+    		<fb:profile-pic uid="<%=post.from.id%>" linked="false" size="q"></fb:profile-pic>
+  		</td>
+  		<td>
     <%=post.message%><br/> 
     <%= time_ago_in_words(post.updated_time) %> ago
-  </span>
-</div>
-
+  		</td>
+	</tr>
 <% end %>
+</table>

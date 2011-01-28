@@ -27,8 +27,10 @@
 							<% end %>
 						</p>
 		</div>
+		<br/>
 		<div id="left">
 		<%= "Welcome #{@current_user.name}!"  if @current_user !=nil %>
+		<br/>
 		<%= yield %>
 		</div>
 	</div>	
