@@ -17,7 +17,6 @@
 				&nbsp;by <a href="http://engineyard.com">Engine Yard</a>
 						<p class="status">
 						<% if current_facebook_user !=nil %>
-							<%= "Welcome #{@current_user.name}!"  if @current_user !=nil %>
 							<%= fb_logout_link("Logout", request.url) %><br />
 							<% else
 							# you must explicitly request permissions for facebook user fields
@@ -29,6 +28,7 @@
 						</p>
 		</div>
 		<div id="left">
+		<%= "Welcome #{@current_user.name}!"  if @current_user !=nil %>
 		<%= yield %>
 		</div>
 	</div>	
