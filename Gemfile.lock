@@ -49,6 +49,7 @@ GEM
     mogli (0.0.19)
       hashie (>= 0.2.0)
       httparty (>= 0.4.3)
+    mysql2 (0.2.6)
     mysql2 (0.2.6-x86-mingw32)
     polyglot (0.3.1)
     rack (1.2.1)
@@ -77,6 +78,7 @@ GEM
     tzinfo (0.3.24)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
