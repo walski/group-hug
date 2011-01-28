@@ -3,7 +3,7 @@ body {
 	color: #000000;
 	margin: 0;
 	padding: 0;
-	font: 1.3em "Arial", Helvetica, Sans-Serif;
+	font: 1em “Georgia”, serif;
 }
 
 a { 
@@ -45,10 +45,7 @@ h2 {
 	background-color: inherit;
 }
 
-br 
-{ 
-line-height:4px; 
-}
+br { line-height:10px;}
 
 h2 a {
 	color: #000000;
@@ -80,7 +77,7 @@ img {
 	color: #000000;
 	background: inherit;
 	width: 280px;
-	font: 0.7em "Arial", Helvetica, Sans-Serif;
+	font-size: 0.7em;
 }
 
 
@@ -94,5 +91,5 @@ img {
 	padding: 0 0 0 20px;
 	display:inline;
 	margin-left: 20px;
-	font: 0.7em "Arial", Helvetica, Sans-Serif;
+	font-size: 0.7em;
 }
