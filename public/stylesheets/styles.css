@@ -97,6 +97,7 @@ img {
 table{
 	border-collapse: collapse;
 	text-align:left;
+	border-top:		1px solid #000;
 }
 tr td, tr th{
 	border-bottom:		1px solid #000;
